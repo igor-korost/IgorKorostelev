@@ -12,6 +12,8 @@
         <project.java.version>1.8</project.java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <testng.suite.file>${project.basedir}/src/test/resources/hw1_all.xml</testng.suite.file>
+        <slf4j-simple.version>1.7.30</slf4j-simple.version>
     </properties>
 
     <build>
@@ -21,7 +23,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.1</version>
                 <configuration>
-                    <suiteXmlFiles>${project.build.testOutputDirectory}/MultiplyDivide.xml</suiteXmlFiles>
+                    <suiteXmlFiles>${testng.suite.file}</suiteXmlFiles>
                 </configuration>
             </plugin>
             <plugin>
@@ -69,6 +71,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.4.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+        <dependency>
             <groupId>com.epam.tat.module4</groupId>
             <artifactId>calculator</artifactId>
             <version>1.0</version>
@@ -80,60 +93,49 @@
             <artifactId>testng</artifactId>
             <version>7.3.0</version>
             <scope>test</scope>
+            <!--  this way we can exclude transitive dependencies, testng has junit in dependencies, but we don't want it in project  -->
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <!--  pay attention, we put only groupId and artifactId, but not version  -->
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
         </dependency>
     </dependencies>
 
     <profiles>
         <profile>
-            <id>all</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
-                        <configuration>
-                            <suiteXmlFiles>${project.build.testOutputDirectory}/all.xml</suiteXmlFiles>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>hw2</id>
+            <properties>
+                <testng.suite.file>${project.basedir}/src/test/resources/hw2.xml</testng.suite.file>
+            </properties>
         </profile>
-
         <profile>
-            <id>AddSubtract</id>
+            <id>hw1_all</id>
+            <properties>
+                <suiteXmlFiles>${project.basedir}/src/test/resources/hw1_all.xml</suiteXmlFiles>
+            </properties>
+        </profile>
+        <profile>
+            <id>hw1_AddSubtract</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
-                        <configuration>
-                            <suiteXmlFiles>${project.build.testOutputDirectory}/AddSubtract.xml</suiteXmlFiles>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <properties>
+                <testng.suite.file>${project.basedir}/src/test/resources/hw1_AddSubtract.xml</testng.suite.file>
+            </properties>
         </profile>
-
         <profile>
-            <id>MultiplyDivide</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
-                        <configuration>
-                            <suiteXmlFiles>${project.build.testOutputDirectory}/MultiplyDivide.xml</suiteXmlFiles>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>hw1_MultiplyDivide</id>
+            <properties>
+                <testng.suite.file>${project.basedir}/src/test/resources/hw1_MultiplyDivide.xml</testng.suite.file>
+            </properties>
         </profile>
-
     </profiles>
 </project>
