@@ -1,35 +1,20 @@
 package src.test.java.ru.training.at.hw2.ex1;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import src.test.java.ru.training.at.hw2.BaseClass;
 
-public class SoftAssertsTest {
-    WebDriver webDriver;
+public class SoftAssertsTest extends BaseClass {
     SoftAssert softAssert = new SoftAssert();
 
     @Test
-    public void test() {
-        // Use WebDriverManager to manage browser driver
-        WebDriverManager.chromedriver().setup();
-        // Create new instance of WebDriver
-        webDriver = new ChromeDriver();
-        // implicit waits
-        webDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        // Start browser maximized
-        webDriver.manage().window().maximize();
+    public void exercise1() {
 
         // 1. Open test site by URL
-        String baseUrl = "https://jdi-testing.github.io/jdi-light/index.html";
         webDriver.navigate().to(baseUrl);
 
         // 2. Assert Browser title
@@ -59,7 +44,6 @@ public class SoftAssertsTest {
         boolean isDisplayedNav = true;
         for (WebElement web : navElements) {
             // do not put empty Strings into List
-            System.out.println(web.getText());
             if (web.getText().length() > 0) {
                 navElementsStringList.add(web.getText());
                 navStringCount++;
