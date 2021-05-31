@@ -111,6 +111,12 @@
 
     <profiles>
         <profile>
+            <id>hw3</id>
+            <properties>
+                <testng.suite.file>${project.basedir}/src/test/resources/hw3.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
             <id>hw2</id>
             <properties>
                 <testng.suite.file>${project.basedir}/src/test/resources/hw2.xml</testng.suite.file>
