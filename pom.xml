@@ -14,17 +14,36 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <testng.suite.file>${project.basedir}/src/test/resources/hw1_all.xml</testng.suite.file>
         <slf4j-simple.version>1.7.30</slf4j-simple.version>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <webdrivermanager.version>4.4.3</webdrivermanager.version>
+        <selenium-java.version>3.141.59</selenium-java.version>
+        <testng.version>7.3.0</testng.version>
+
+        <allure-testng.version>2.14.0</allure-testng.version>
+        <aspectjweaver.version>1.9.6</aspectjweaver.version>
+        <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
     <build>
         <plugins>
             <plugin>
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <suiteXmlFiles>${testng.suite.file}</suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -66,6 +85,14 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <!--                <configuration>-->
+                <!--                    <reportVersion>2.7.0</reportVersion>-->
+                <!--                </configuration>-->
+            </plugin>
         </plugins>
     </build>
 
@@ -73,13 +100,13 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>4.4.3</version>
+            <version>${webdrivermanager.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
+            <version>${selenium-java.version}</version>
         </dependency>
         <dependency>
             <groupId>com.epam.tat.module4</groupId>
@@ -91,7 +118,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.3.0</version>
+            <version>${testng.version}</version>
             <scope>test</scope>
             <!--  this way we can exclude transitive dependencies, testng has junit in dependencies, but we don't want it in project  -->
             <exclusions>
@@ -107,9 +134,21 @@
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j-simple.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure-testng.version}</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>hw4</id>
+            <properties>
+                <testng.suite.file>${project.basedir}/src/test/resources/hw4.xml</testng.suite.file>
+            </properties>
+        </profile>
         <profile>
             <id>hw3</id>
             <properties>
@@ -144,4 +183,18 @@
             </properties>
         </profile>
     </profiles>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportDirectory>${basedir}/allure-report</reportDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
