@@ -46,8 +46,6 @@ public class StepsEx2 {
 
     @Step("4. Assert Username is logged in")
     public void assertUsername(WebDriver webDriver) {
-        String login = fileReader.getProperties("name");
-        String password = fileReader.getProperties("password");
         String expectedUsername = fileReader.getProperties("loggedUser");
         softAssert.assertEquals(loginPage.getLoggedUser(), expectedUsername);
     }
