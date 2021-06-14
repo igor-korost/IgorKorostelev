@@ -8,7 +8,7 @@ import java.util.Properties;
 public class PropertiesFileReader {
 
     public String getProperties(String name) {
-        String propertiesPath = "src/test/resources/hw3.properties";
+        String propertiesPath = "src/test/resources/hw.properties";
         String value = "";
         Properties properties = new Properties();
 
