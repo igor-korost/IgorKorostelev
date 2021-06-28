@@ -22,6 +22,7 @@
         <allure-testng.version>2.14.0</allure-testng.version>
         <aspectjweaver.version>1.9.6</aspectjweaver.version>
         <aspectj.version>1.8.10</aspectj.version>
+        <cucumber.version>6.9.1</cucumber.version>
     </properties>
 
     <build>
@@ -140,9 +141,29 @@
             <version>${allure-testng.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>hw5</id>
+            <properties>
+                <testng.suite.file>${project.basedir}/src/test/resources/hw5.xml</testng.suite.file>
+            </properties>
+        </profile>
         <profile>
             <id>hw4</id>
             <properties>

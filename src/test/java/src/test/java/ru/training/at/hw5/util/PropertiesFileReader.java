@@ -1,11 +1,13 @@
-package src.test.java.ru.training.at.hw3.util;
+package src.test.java.ru.training.at.hw5.util;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesFileReader {
 
-    public String getProperties(String name) {
+    public String getValue(String name) {
         String propertiesPath = "src/test/resources/hw.properties";
         String value = "";
         Properties properties = new Properties();
